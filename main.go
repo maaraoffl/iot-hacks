@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"github.com/danward79/go.wemo"
 	"log"
+	"strconv"
 	"time"
 )
 
-func main() {
+func hello() {
 
 	listenerAddress := "192.168.1.3:6767"
 	timeout := 300
@@ -36,14 +37,25 @@ func main() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			fmt.Println(string(data))
 
+			log.Println("state change event info: ", string(data))
+
+			binaryState, _ := strconv.Atoi(m.Deviceevent.BinaryState)
+			InsertState("192.168.1.8", "Wemo Insight Proj1", binaryState)
+
+			// fmt.Println(string(data))
+			// log.Println(subscriptions)
 			// subscriptions[m.Sid].State = m.State
-			log.Println("---Current state: ", m.Deviceevent.BinaryState)
-			log.Println("---Subscriber Event: ", subscriptions[m.Sid])
+			// log.Println("---Current state: ", m.Deviceevent.BinaryState)
+			// log.Println("---Subscriber Event: ", subscriptions[m.Sid])
 		} else {
 			log.Println("Does'nt exist, ", m.Sid)
 		}
 	}
+
+}
+
+func main() {
+	InsertState("192.168.1.7", "Living room light", 1)
 
 }
