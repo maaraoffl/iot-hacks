@@ -14,7 +14,7 @@ func InsertState(ipAddr string, deviceName string, binaryState int) {
 
 	log.Println(time.Now())
 
-	dbInstance := "dbinstance.cv5jyffe4iaf.us-east-1.rds.amazonaws.com"
+	dbInstance := os.Getenv("MYSQL_DB_INSTANCE")
 	dbPort := 3306
 	database := "IoT"
 	dbUser := os.Getenv("MYSQL_DB_USER")
